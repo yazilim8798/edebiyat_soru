@@ -1,0 +1,5 @@
+{
+    "chat.extensionUnification.enabled": false,
+    "githubPullRequests.codingAgent.enabled": false,
+    "githubPullRequests.experimental.chat": false
+}
