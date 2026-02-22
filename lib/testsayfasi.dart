@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:edebiyat_soru/secenekler.dart';
 
 class test extends StatefulWidget {
-  test({super.key});
+  final String? baslikFiltresi;
+  const test({super.key, this.baslikFiltresi});
 
   @override
   State<test> createState() => _testState();
@@ -23,7 +24,7 @@ class _testState extends State<test> {
           children: [
             cardlar(
               context,
-              SoruSayfasi(baslikFiltresi: "Geçiş Dönemi Eserleri"),
+              SoruSayfasi(baslikFiltresi:  widget.baslikFiltresi),
               "Soru-Cevap",
             ),
             cardlar(context, Coktansecmeli(), "Test"),
