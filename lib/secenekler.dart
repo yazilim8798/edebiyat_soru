@@ -1,4 +1,4 @@
-import 'package:edebiyat_soru/sorusayfasi.dart'; // sadece bu import kalır
+// sadece bu import kalır
 import 'package:edebiyat_soru/testsayfasi.dart';
 
 import 'package:flutter/material.dart';
@@ -17,7 +17,7 @@ final List<Map<String, dynamic>> konular = [
   {"baslik": "Fecriâti Edebiyatı", "filtre": "Fecriâti Edebiyatı"},
   {"baslik": "Milli Edebiyat Dönemi", "filtre": "Milli Edebiyat Dönemi"},
   {
-    "baslik": "Cumhuriyet Dönemi Türk Edebiyatı ",
+    "baslik": "Cumhuriyet Dönemi Türk Edebiyatı",
     "filtre": "Cumhuriyet Dönemi Türk Edebiyatı",
   },
   {"baslik": "Şiir Bilgisi", "filtre": "Şiir Bilgisi"},
@@ -29,7 +29,7 @@ final List<Map<String, dynamic>> konular = [
 ];
 
 class Secenekler extends StatelessWidget {
-  Secenekler({super.key});
+  const Secenekler({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -49,18 +49,19 @@ class Secenekler extends StatelessWidget {
     return Card(
       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       elevation: 4,
+
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
         splashFactory: NoSplash.splashFactory,
         highlightColor: Colors.transparent,
         onTap: () {
-          test();
           Navigator.push(
             context,
 
             MaterialPageRoute(
-              builder: (context) => test(baslikFiltresi: filtre),
+              builder: (context) => Test(baslikFiltresi: filtre, metin: text),
             ),
           );
         },

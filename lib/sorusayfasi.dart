@@ -33,6 +33,12 @@ class _SoruSayfasiState extends State<SoruSayfasi> {
 
   @override
   Widget build(BuildContext context) {
+    if (filtrelenmisListe.isEmpty) {
+      return Scaffold(
+        appBar: AppBar(title: Text("Soru Yok")),
+        body: Center(child: Text("Bu kategoriye ait soru bulunamadı.")),
+      );
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text(

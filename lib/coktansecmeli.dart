@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
+
 // ignore: must_be_immutable
 class Coktansecmeli extends StatelessWidget {
-  const Coktansecmeli({super.key});
+  String? metin2;
+  Coktansecmeli({super.key, this.metin2});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +15,7 @@ class Coktansecmeli extends StatelessWidget {
           Center(
             child: SizedBox(
               height: 60,
-              child: Center(child: Text("Coktan Secmeli Sorular")),
+              child: Center(child: Text(metin2 ?? "", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),), ),
             ),
           ),
         ],

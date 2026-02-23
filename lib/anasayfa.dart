@@ -16,12 +16,15 @@ class AnaSayfa extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: ListView(
           children: [
-            Image.asset(
-              "assets/anasayfalogo/anasayfa.png",
-              width: MediaQuery.of(context).size.width * 0.7,
+            SizedBox(height: 12),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Image.asset(
+                "assets/anasayfalogo/anasayfa.png",
+                width: MediaQuery.of(context).size.width * 0.7,
+              ),
             ),
             SizedBox(height: 13),
             Center(
