@@ -1,6 +1,8 @@
 import 'package:edebiyat_soru/coktansecmeli.dart';
 import 'package:edebiyat_soru/sorusayfasi.dart';
+import 'package:edebiyat_soru/zihinharitalari.dart';
 import 'package:flutter/material.dart';
+import 'pdfsayfasi.dart';
 
 class Test extends StatefulWidget {
   final String? baslikFiltresi;
@@ -29,6 +31,21 @@ class _TestState extends State<Test> {
               "Soru-Cevap",
             ),
             cardlar(context, () => Coktansecmeli(metin2: widget.metin), "Test"),
+            cardlar(
+              context,
+              () => Coktansecmeli(metin2: widget.metin),
+              "Eşleştirme",
+            ),
+            cardlar(
+              context,
+              () => PdfSayfa(baslik: widget.baslikFiltresi ?? ""),
+              "Konu Özeti",
+            ),
+            cardlar(
+              context,
+              () => Zihinharitalari(baslik: widget.baslikFiltresi ?? ""),
+              "Zihin Haritası",
+            ),
           ],
         ),
       ),

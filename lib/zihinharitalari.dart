@@ -1,10 +1,9 @@
-import 'package:edebiyat_soru/sorularlistesi.dart';
 import 'package:flutter/material.dart';
 
 class Zihinharitalari extends StatelessWidget {
-  final Soru soru;
+  final String baslik;
 
-  const Zihinharitalari({super.key, required this.soru});
+  const Zihinharitalari({super.key, required this.baslik});
 
   static const Map<String, String> zihinHaritasiMap = {
     "İslamiyet Öncesi Türk Edebiyatı":
@@ -17,15 +16,19 @@ class Zihinharitalari extends StatelessWidget {
     "Milli Edebiyat Dönemi": "assets/zihinharitalari/milliedebiyat.png",
     "Cumhuriyet Dönemi Türk Edebiyatı":
         "assets/zihinharitalari/cumhuriyetedebiyati.png",
+    "Dünya Edebiyatı": "assets/zihinharitalari/dunya_edebiyati.png",
     "Şiir Bilgisi": "assets/zihinharitalari/siirbilgisi.png",
     "Söz Sanatları": "assets/zihinharitalari/sozsanatlari.png",
     "Geçiş Dönemi Eserleri": "assets/zihinharitalari/gecisdonemi.png",
     "Metinlerin Sınıflandırılması":
         "assets/zihinharitalari/metinlerinsiniflandirilmasi.png",
+    "Türk Dünyası Edebiyatı":
+        "assets/zihinharitalari/turk_dunyasi_edebiyati.png",
+    "Edebi Akımlar": "assets/zihinharitalari/edebi_akimlar.png",
+    "Yazar-Eser": "assets/zihinharitalari/yazar_eser.png",
   };
-  String zihinharitayolu() {
-    String baslik = soru.baslik;
 
+  String zihinharitayolu() {
     return zihinHaritasiMap[baslik] ?? "assets/zihinharitalari/default.png";
   }
 

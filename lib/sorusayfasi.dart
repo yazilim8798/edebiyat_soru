@@ -43,7 +43,11 @@ class _SoruSayfasiState extends State<SoruSayfasi> {
       appBar: AppBar(
         title: const Text(
           "EDEBİYAT SORU",
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+            letterSpacing: 0.3,
+          ),
         ),
         centerTitle: true,
       ),
@@ -54,10 +58,11 @@ class _SoruSayfasiState extends State<SoruSayfasi> {
             Text(
               filtrelenmisListe[index].baslik,
               style: TextStyle(
-                height: 1.5,
-                fontSize: MediaQuery.of(context).size.width * 0.055,
+                height: 1.4,
+                fontSize: 18,
                 fontStyle: FontStyle.italic,
                 fontWeight: FontWeight.bold,
+                letterSpacing: 0.2,
               ),
             ),
             Expanded(
@@ -92,10 +97,10 @@ class _SoruSayfasiState extends State<SoruSayfasi> {
                             Text.rich(
                               TextSpan(
                                 style: TextStyle(
-                                  height: 1.5,
-                                  fontSize:
-                                      MediaQuery.of(context).size.width * 0.055,
+                                  height: 1.6,
+                                  fontSize: 17,
                                   fontStyle: FontStyle.italic,
+                                  letterSpacing: 0.2,
                                 ),
                                 children: cevapGoster
                                     ? [
@@ -159,8 +164,9 @@ class _SoruSayfasiState extends State<SoruSayfasi> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        Zihinharitalari(soru: filtrelenmisListe[index]),
+                    builder: (context) => Zihinharitalari(
+                      baslik: filtrelenmisListe[index].baslik,
+                    ),
                   ),
                 );
               },
