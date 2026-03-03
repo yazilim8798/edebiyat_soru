@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "868136481797",
+    "project_id": "edebiyat-soru",
+    "storage_bucket": "edebiyat-soru.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:868136481797:android:e23df9274b3a68e7b7d86c",
+        "android_client_info": {
+          "package_name": "com.example.edebiyat_soru"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoTMb8rJsmxsgcpmoNIGVhJk8kxJU4jQI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

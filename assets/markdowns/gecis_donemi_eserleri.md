@@ -64,14 +64,48 @@
 
 ---
 
-## 3. Eserlerin Karşılaştırmalı Genel Tablosu
+ ## 3. Eserlerin Karşılaştırmalı Genel Tablosu
 
-| Eser | Yazar | Yüzyıl | Biçim | Tür | Dil/Alfabe |
-|---|---|---|---|---|---|
-| *Kutadgu Bilig* | Yusuf Has Hacib | 11. yy | Aruz / Mesnevi | Siyasetname | Hakaniye Türkçesi |
-| *Divanü Lügati't-Türk* | Kaşgarlı Mahmud | 11. yy | Nesir + Şiir | Sözlük | Türk lehçeleri |
-| *Atabetü'l-Hakayık* | Edib Ahmed Yükneki | 12. yy | Aruz + Hece | Didaktik şiir | Hakaniye Türkçesi |
-| *Divan-ı Hikmet* | Hoca Ahmed Yesevi | 12. yy | Hece | Tasavvufi şiir | Türkistan Türkçesi |
+### Kutadgu Bilig
+
+| Özellik      | Bilgi                    |
+|--------------|--------------------------|
+| **Yazar**    | Yusuf Has Hacib          |
+| **Yüzyıl**   | 11. yüzyıl (1069–1070)   |
+| **Biçim**    | Aruz / Mesnevi           |
+| **Tür**      | Siyasetname              |
+| **Dil**      | Hakaniye Türkçesi        |
+
+### Divanü Lügati't-Türk
+
+| Özellik      | Bilgi                    |
+|--------------|--------------------------|
+| **Yazar**    | Kaşgarlı Mahmud          |
+| **Yüzyıl**   | 11. yüzyıl (1072–1074)   |
+| **Biçim**    | Nesir + Şiir             |
+| **Tür**      | Sözlük                   |
+| **Dil**      | Türk Lehçeleri           |
+
+### Atabetü'l-Hakayık
+
+| Özellik      | Bilgi                    |
+|--------------|--------------------------|
+| **Yazar**    | Edib Ahmed Yükneki       |
+| **Yüzyıl**   | 12. yüzyıl               |
+| **Biçim**    | Aruz + Hece              |
+| **Tür**      | Didaktik Şiir            |
+| **Dil**      | Hakaniye Türkçesi        |
+
+### Divan-ı Hikmet
+
+| Özellik      | Bilgi                    |
+|--------------|--------------------------|
+| **Yazar**    | Hoca Ahmed Yesevi        |
+| **Yüzyıl**   | 12. yüzyıl               |
+| **Biçim**    | Hece                     |
+| **Tür**      | Tasavvufi Şiir           |
+| **Dil**      | Türkistan Türkçesi       |
+
 
 ---
 
