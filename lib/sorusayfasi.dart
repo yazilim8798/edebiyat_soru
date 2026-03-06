@@ -5,6 +5,7 @@ import 'package:edebiyat_soru/zihinharitalari.dart';
 import 'sorularlistesi.dart';
 
 import 'package:flutter/material.dart';
+import 'firestore_servis.dart';
 
 class SoruSayfasi extends StatefulWidget {
   final String? baslikFiltresi;
@@ -15,28 +16,54 @@ class SoruSayfasi extends StatefulWidget {
 }
 
 class _SoruSayfasiState extends State<SoruSayfasi> {
+
+final FirestoreServis _servis = FirestoreServis();
+
   int index = 0;
 
   bool cevapGoster = false;
 
   final Random rnd = Random();
 
-  late final List<Soru> filtrelenmisListe;
+ List<Soru> filtrelenmisListe = [];
+ bool yukleniyor = true;
 
   @override
   void initState() {
     super.initState();
-    filtrelenmisListe = widget.baslikFiltresi == null
-        ? sorular
-        : sorular.where((s) => s.baslik == widget.baslikFiltresi).toList();
-  }
 
+        verileriGetir(); // Sayfa açılır açılmaz bu yeni metodumuzu çağırıyoruz
+  }
+// 2. Yeni metodumuz: Servise gidip verileri alacak
+  void verileriGetir() async {
+    // Servisimizdeki metodun işini bitirmesini bekliyoruz
+    List<Soru> gelenSorular = await _servis.sorulariGetir();
+
+    setState(() {
+      // Eğer bir filtre varsa filtreliyoruz, yoksa hepsini alıyoruz
+      filtrelenmisListe = widget.baslikFiltresi == null
+          ? gelenSorular
+          : gelenSorular.where((s) => s.baslik == widget.baslikFiltresi).toList();
+      
+      yukleniyor = false; // Veri geldi, artık yükleme ekranını kapatabiliriz
+    });
+  }
   @override
   Widget build(BuildContext context) {
+   // Eğer veriler henüz internetten inmediyse bu ekranı göster
+    if (yukleniyor) {
+      return Scaffold(
+        appBar: AppBar(title: Text(widget.baslikFiltresi ?? "Yükleniyor...")),
+        body: const Center(
+          child: CircularProgressIndicator(), // Ekranda dönen mavi çember
+        ),
+      );
+    }
+    // Veri inmişse ama liste boşsa bu ekranı göster
     if (filtrelenmisListe.isEmpty) {
       return Scaffold(
         appBar: AppBar(title: Text("Soru Yok")),
-        body: Center(child: Text("Bu kategoriye ait soru bulunamadı.")),
+        body: const Center(child: Text("Bu kategoriye ait soru bulunamadı.")),
       );
     }
     return Scaffold(

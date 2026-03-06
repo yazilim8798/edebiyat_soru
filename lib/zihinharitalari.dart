@@ -1,73 +1,89 @@
 import 'package:flutter/material.dart';
+import 'firestore_servis.dart'; // Servisi kullanmak için
 
-class Zihinharitalari extends StatelessWidget {
+class Zihinharitalari extends StatefulWidget {
   final String baslik;
-
   const Zihinharitalari({super.key, required this.baslik});
 
-  static const Map<String, String> zihinHaritasiMap = {
-    "İslamiyet Öncesi Türk Edebiyatı":
-        "assets/zihinharitalari/islamiyetoncesiturkedebiyati.png",
-    "Halk Edebiyatı": "assets/zihinharitalari/halkedebiyati.png",
-    "Divan Edebiyatı": "assets/zihinharitalari/divanedebiyati.png",
-    "Tanzimat Edebiyatı": "assets/zihinharitalari/tanzimat.png",
-    "Servetifünun Edebiyatı": "assets/zihinharitalari/servetifünun.png",
-    "Fecriâti Edebiyatı": "assets/zihinharitalari/fecriati.png",
-    "Milli Edebiyat Dönemi": "assets/zihinharitalari/milliedebiyat.png",
-    "Cumhuriyet Dönemi Türk Edebiyatı":
-        "assets/zihinharitalari/cumhuriyetedebiyati.png",
-    "Dünya Edebiyatı": "assets/zihinharitalari/dunya_edebiyati.png",
-    "Şiir Bilgisi": "assets/zihinharitalari/siirbilgisi.png",
-    "Söz Sanatları": "assets/zihinharitalari/sozsanatlari.png",
-    "Geçiş Dönemi Eserleri": "assets/zihinharitalari/gecisdonemi.png",
-    "Metinlerin Sınıflandırılması":
-        "assets/zihinharitalari/metinlerinsiniflandirilmasi.png",
-    "Türk Dünyası Edebiyatı":
-        "assets/zihinharitalari/turk_dunyasi_edebiyati.png",
-    "Edebi Akımlar": "assets/zihinharitalari/edebi_akimlar.png",
-    "Yazar-Eser": "assets/zihinharitalari/yazar_eser.png",
+  @override
+  State<Zihinharitalari> createState() => _ZihinharitalariState();
+}
+
+class _ZihinharitalariState extends State<Zihinharitalari> {
+  final FirestoreServis _servis = FirestoreServis();
+  String? _resimUrl;
+  bool _yukleniyor = true;
+
+  // Başlıklar ile Storage'daki dosya isimlerini eşleştiren liste
+  static const Map<String, String> dosyaIsimleriMap = {
+    "İslamiyet Öncesi Türk Edebiyatı": "islamiyetoncesiturkedebiyati.png",
+    "Halk Edebiyatı": "halkedebiyati.png",
+    "Divan Edebiyatı": "divanedebiyati.png",
+    "Tanzimat Edebiyatı": "tanzimat.png",
+    "Servetifünun Edebiyatı": "servetifünun.png",
+    "Fecriâti Edebiyatı": "fecriati.png",
+    "Milli Edebiyat Dönemi": "milliedebiyat.png",
+    "Cumhuriyet Dönemi Türk Edebiyatı": "cumhuriyetedebiyati.png",
+    "Dünya Edebiyatı": "dunya_edebiyati.png",
+    "Şiir Bilgisi": "siirbilgisi.png",
+    "Söz Sanatları": "sozsanatlari.png",
+    "Metinlerin Sınıflandırılması": "metinlerinsiniflandirilmasi.png",
+    "Edebi Akımlar": "edebi_akimlar.png",
+    "Yazar-Eser": "yazar_eser.png",
+    "Geçiş Dönemi Eserleri": "gecisdonemi.png",
   };
 
-  String zihinharitayolu() {
-    return zihinHaritasiMap[baslik] ?? "assets/zihinharitalari/default.png";
+  @override
+  void initState() {
+    super.initState();
+    _urlGetir();
+  }
+
+  Future<void> _urlGetir() async {
+    // Başlığa karşılık gelen dosya adını bul (yoksa default.png kullan)
+    String dosyaAdi = dosyaIsimleriMap[widget.baslik] ?? "default.png";
+
+    // Servisten URL'yi al
+    String url = await _servis.zihinHaritasiUrlGetir(dosyaAdi);
+
+    if (mounted) {
+      setState(() {
+        _resimUrl = url;
+        _yukleniyor = false;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "ZİHİN HARİTALARI",
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-        ),
-        centerTitle: true,
-      ),
-      body: SafeArea(
-        child: SizedBox.expand(
-          child: InteractiveViewer(
-            clipBehavior: Clip.none,
-            panEnabled: true,
-            scaleEnabled: true,
-            minScale: 0.5,
-            maxScale: 5.0,
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                maxWidth: MediaQuery.of(context).size.width,
-                maxHeight: MediaQuery.of(context).size.height * 0.85,
-              ),
-              child: Image.asset(
-                zihinharitayolu(),
-                fit: BoxFit.cover,
-                width: double.infinity,
-                height: double.infinity,
-                errorBuilder: (context, error, stackTrace) {
-                  return const Center(child: Text("Görsel bulunamadı"));
-                },
+      appBar: AppBar(title: const Text("ZİHİN HARİTASI"), centerTitle: true),
+      body: _yukleniyor
+          ? const Center(child: CircularProgressIndicator())
+          : _resimUrl == "" || _resimUrl == null
+          ? const Center(child: Text("Resim yüklenemedi."))
+          : SafeArea(
+              child: InteractiveViewer(
+                clipBehavior: Clip.none,
+                panEnabled: true,
+                scaleEnabled: true,
+                minScale: 0.5,
+                maxScale: 5.0,
+                child: Center(
+                  child: Image.network(
+                    _resimUrl!, // İnternetteki adresten yükle
+                    fit: BoxFit.contain,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return const CircularProgressIndicator();
+                    },
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Icon(Icons.broken_image, size: 50);
+                    },
+                  ),
+                ),
               ),
             ),
-          ),
-        ),
-      ),
     );
   }
 }

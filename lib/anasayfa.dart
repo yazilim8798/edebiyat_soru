@@ -1,11 +1,13 @@
 import 'package:edebiyat_soru/secenekler.dart';
 import 'package:flutter/material.dart';
+import 'firestore_servis.dart'; // Servisi kullanmak için
 
 class AnaSayfa extends StatelessWidget {
   const AnaSayfa({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final FirestoreServis servis = FirestoreServis();
     return Scaffold(
       appBar: AppBar(
         title: Center(
@@ -61,6 +63,8 @@ class AnaSayfa extends StatelessWidget {
                 ),
               ),
             ),
+            // anasayfa.dart içinde uygun bir yere (örneğin bir Column içine):
+          
           ],
         ),
       ),
