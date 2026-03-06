@@ -1,11 +1,13 @@
 import 'package:edebiyat_soru/secenekler.dart';
 import 'package:flutter/material.dart';
+import 'firestore_servis.dart'; // Servisi kullanmak için
 
 class AnaSayfa extends StatelessWidget {
   const AnaSayfa({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final FirestoreServis servis = FirestoreServis();
     return Scaffold(
       appBar: AppBar(
         title: Center(
@@ -16,12 +18,15 @@ class AnaSayfa extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: ListView(
           children: [
-            Image.asset(
-              "assets/anasayfalogo/anasayfa.png",
-              width: MediaQuery.of(context).size.width * 0.7,
+            SizedBox(height: 12),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Image.asset(
+                "assets/anasayfalogo/anasayfa.png",
+                width: MediaQuery.of(context).size.width * 0.7,
+              ),
             ),
             SizedBox(height: 13),
             Center(
@@ -58,6 +63,8 @@ class AnaSayfa extends StatelessWidget {
                 ),
               ),
             ),
+            // anasayfa.dart içinde uygun bir yere (örneğin bir Column içine):
+          
           ],
         ),
       ),

@@ -1,20 +1,24 @@
 import 'package:edebiyat_soru/coktansecmeli.dart';
 import 'package:edebiyat_soru/sorusayfasi.dart';
+import 'package:edebiyat_soru/zihinharitalari.dart';
 import 'package:flutter/material.dart';
-import 'package:edebiyat_soru/secenekler.dart';
+import 'pdfsayfasi.dart';
 
-class test extends StatefulWidget {
-  test({super.key});
+class Test extends StatefulWidget {
+  final String? baslikFiltresi;
+  final String? metin;
+
+  const Test({super.key, this.baslikFiltresi, this.metin});
 
   @override
-  State<test> createState() => _testState();
+  State<Test> createState() => _TestState();
 }
 
-class _testState extends State<test> {
+class _TestState extends State<Test> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Test Sayfası")),
+      appBar: AppBar(title: Text(widget.metin ?? "")),
       body: SizedBox(
         height: double.infinity,
         width: double.infinity,
@@ -23,17 +27,36 @@ class _testState extends State<test> {
           children: [
             cardlar(
               context,
-              SoruSayfasi(baslikFiltresi: "Geçiş Dönemi Eserleri"),
+              () => SoruSayfasi(baslikFiltresi: widget.baslikFiltresi),
               "Soru-Cevap",
             ),
-            cardlar(context, Coktansecmeli(), "Test"),
+            cardlar(context, () => Coktansecmeli(metin2: widget.metin), "Test"),
+            cardlar(
+              context,
+              () => Coktansecmeli(metin2: widget.metin),
+              "Eşleştirme",
+            ),
+            cardlar(
+              context,
+              () => PdfSayfa(baslik: widget.baslikFiltresi ?? ""),
+              "Konu Özeti",
+            ),
+            cardlar(
+              context,
+              () => Zihinharitalari(baslik: widget.baslikFiltresi ?? ""),
+              "Zihin Haritası",
+            ),
           ],
         ),
       ),
     );
   }
 
-  Card cardlar(BuildContext context, Widget hedefsayfa, String metin) {
+  Card cardlar(
+    BuildContext context,
+    Widget Function() hedefsayfa,
+    String metin,
+  ) {
     return Card(
       margin: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
       elevation: 4,
@@ -45,7 +68,7 @@ class _testState extends State<test> {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => hedefsayfa),
+            MaterialPageRoute(builder: (context) => hedefsayfa()),
           );
         },
         child: Center(

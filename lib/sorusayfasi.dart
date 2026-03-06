@@ -5,6 +5,7 @@ import 'package:edebiyat_soru/zihinharitalari.dart';
 import 'sorularlistesi.dart';
 
 import 'package:flutter/material.dart';
+import 'firestore_servis.dart';
 
 class SoruSayfasi extends StatefulWidget {
   final String? baslikFiltresi;
@@ -15,29 +16,65 @@ class SoruSayfasi extends StatefulWidget {
 }
 
 class _SoruSayfasiState extends State<SoruSayfasi> {
+
+final FirestoreServis _servis = FirestoreServis();
+
   int index = 0;
 
   bool cevapGoster = false;
 
   final Random rnd = Random();
 
-  late final List<Soru> filtrelenmisListe;
+ List<Soru> filtrelenmisListe = [];
+ bool yukleniyor = true;
 
   @override
   void initState() {
     super.initState();
-    filtrelenmisListe = widget.baslikFiltresi == null
-        ? sorular
-        : sorular.where((s) => s.baslik == widget.baslikFiltresi).toList();
-  }
 
+        verileriGetir(); // Sayfa açılır açılmaz bu yeni metodumuzu çağırıyoruz
+  }
+// 2. Yeni metodumuz: Servise gidip verileri alacak
+  void verileriGetir() async {
+    // Servisimizdeki metodun işini bitirmesini bekliyoruz
+    List<Soru> gelenSorular = await _servis.sorulariGetir();
+
+    setState(() {
+      // Eğer bir filtre varsa filtreliyoruz, yoksa hepsini alıyoruz
+      filtrelenmisListe = widget.baslikFiltresi == null
+          ? gelenSorular
+          : gelenSorular.where((s) => s.baslik == widget.baslikFiltresi).toList();
+      
+      yukleniyor = false; // Veri geldi, artık yükleme ekranını kapatabiliriz
+    });
+  }
   @override
   Widget build(BuildContext context) {
+   // Eğer veriler henüz internetten inmediyse bu ekranı göster
+    if (yukleniyor) {
+      return Scaffold(
+        appBar: AppBar(title: Text(widget.baslikFiltresi ?? "Yükleniyor...")),
+        body: const Center(
+          child: CircularProgressIndicator(), // Ekranda dönen mavi çember
+        ),
+      );
+    }
+    // Veri inmişse ama liste boşsa bu ekranı göster
+    if (filtrelenmisListe.isEmpty) {
+      return Scaffold(
+        appBar: AppBar(title: Text("Soru Yok")),
+        body: const Center(child: Text("Bu kategoriye ait soru bulunamadı.")),
+      );
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text(
           "EDEBİYAT SORU",
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+            letterSpacing: 0.3,
+          ),
         ),
         centerTitle: true,
       ),
@@ -48,10 +85,11 @@ class _SoruSayfasiState extends State<SoruSayfasi> {
             Text(
               filtrelenmisListe[index].baslik,
               style: TextStyle(
-                height: 1.5,
-                fontSize: MediaQuery.of(context).size.width * 0.055,
+                height: 1.4,
+                fontSize: 18,
                 fontStyle: FontStyle.italic,
                 fontWeight: FontWeight.bold,
+                letterSpacing: 0.2,
               ),
             ),
             Expanded(
@@ -86,10 +124,10 @@ class _SoruSayfasiState extends State<SoruSayfasi> {
                             Text.rich(
                               TextSpan(
                                 style: TextStyle(
-                                  height: 1.5,
-                                  fontSize:
-                                      MediaQuery.of(context).size.width * 0.055,
+                                  height: 1.6,
+                                  fontSize: 17,
                                   fontStyle: FontStyle.italic,
+                                  letterSpacing: 0.2,
                                 ),
                                 children: cevapGoster
                                     ? [
@@ -153,8 +191,9 @@ class _SoruSayfasiState extends State<SoruSayfasi> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        Zihinharitalari(soru: filtrelenmisListe[index]),
+                    builder: (context) => Zihinharitalari(
+                      baslik: filtrelenmisListe[index].baslik,
+                    ),
                   ),
                 );
               },
